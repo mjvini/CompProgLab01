@@ -104,34 +104,15 @@ int32_t limpaBitN(int32_t x, int8_t n) {
     return (x & ~(1 << n));
 }
 
-/*
- * Bit na posição p do inteiro x
- *      Permitido:
- *          Operações bitwise: << >> | & + -
- *
- *      Número máximo de operações: 6
- *      Monitor: 2
- *
- *      Retorna o valor do bit na posição p no inteiro x
- *      Valor de retorno pode ser apenas 0 ou 1
- *
- *      p será um valor entre 0 e 31
- *
- *      Exemplo:
- *          23 em binário: 0   0 ... 0 1 0 1 1 1
- *               posições: 31 30 ... 5 4 3 2 1 0
- *
- *          bitEmP(23, 31) -> 0
- *          bitEmP(23, 5) -> 0
- *          bitEmP(23, 4) -> 1
- *          bitEmP(23, 3) -> 0
- *          bitEmP(23, 2) -> 1
- *          bitEmP(23, 1) -> 1
- *          bitEmP(23, 0) -> 1
- *
+/**
+ * O bitshift a direita sera o mesmo que dividir x por 2^p que
+ * o que eliminara os (p-1) bits menos significativos tornando
+ * o ultimo bit do numero que sobrar a posicao p, que tomando 
+ * um and 1 retornara 1 se esse ultimo bit for 1 ou 0 se ele 
+ * for 0
  */
 int32_t bitEmP(int32_t x, uint8_t p) {
-    return -1;
+    return ((x >> p) & 1);
 }
 
 /*
