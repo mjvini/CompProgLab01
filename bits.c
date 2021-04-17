@@ -115,30 +115,14 @@ int32_t bitEmP(int32_t x, uint8_t p) {
     return ((x >> p) & 1);
 }
 
-/*
- * Byte na posição p do inteiro x
- *      Permitido:
- *          Operações: << >> | ! &
- *
- *      Número máximo de operações: 6
- *      Monitor: 3
- *
- *      Retorna o valor do bit na posição p no inteiro x
- *      Valor de retorno pode ser entre 0 e 0xFF
- *
- *      p será um valor entre 0 e 3
- *      0 retorna LSB
- *      3 retorna MSB
- *
- *      Exemplo:
- *          byteEmP(0x12345678, 0) -> 0x78
- *          byteEmP(0x12345678, 1) -> 0x56
- *          byteEmP(0x12345678, 2) -> 0x34
- *          byteEmP(0x12345678, 3) -> 0x12
- *
+/**
+ * O bitshift a direita movera 8 bits ou 1 byte a direita, 
+ * deixando o byte menos significativo como o numero que queremos
+ * da posicao p. O and bit a bit com o ultimo numero em hexa 
+ * retornara o proprio numero em hexa 
  */
 int32_t byteEmP(int32_t x, uint8_t p) {
-    return -1;
+    return ((x >> (8 * p)) & 0xFF);
 }
 
 /*
