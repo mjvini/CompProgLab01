@@ -80,8 +80,14 @@ int32_t negativo(int32_t x) {
  *          bitwiseAnd(3, 11) -> 3
  *              11 & 1011 -> 0011
  */
+/*Implementação do & usando bitwise
+*1° passo: ~x e ~y :     Inverte todos os bits de x e y.
+*2° passo: (~x | ~y):    Faz um OU entre ~x e ~y.
+*3° passo: ~(resultado): Inverte o resultado da operação anterior.
+*                        Como uma Nor com as entradas invertidas.
+*/
 int32_t bitwiseAnd(int32_t x, int32_t y) {
-    return -1;
+    return ~(~x | ~y);
 }
 
 /**
