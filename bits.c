@@ -20,9 +20,9 @@
  *      - As resoluções com menos operações do que a do monitor terão bonificação.
  *
  * Assinatura:
- *      Aluno: <nome>
- *      DRE: <DRE>
- *      versão do GCC utilizada: XXXX
+ *      Aluno: Miguel Lima Tavares
+ *      DRE: 119161571
+ *      versão do GCC utilizada: 8.2.0
  *
  */
 
@@ -43,7 +43,7 @@
  * 0 and 1 retornara 0
  */
 int32_t ehPar(int32_t x) {
-    return (x & 1);
+    return (~x & 1);
 }
 
 /**
@@ -131,79 +131,36 @@ int32_t byteEmP(int32_t x, uint8_t p) {
     return ((x >> (8 * p)) & 0xFF);
 }
 
-/*
- * Seta byte na posição p do inteiro x como y
- *      Permitido:
- *          Operações: << >> | ~ ! &
- *
- *      Número máximo de operações: 7
- *      Monitor: 5
- *
- *      Retorna x com o valor y no byte da posição p
- *
- *      p será um valor entre 0 e 3
- *      0 retorna LSB
- *      3 retorna MSB
- *
- *      Exemplo:
- *          setaByteEmP(0x12345678, 0xFF, 0) -> 0x123456FF
- *          setaByteEmP(0x12345678, 0xFF, 1) -> 0x1234FF78
- *          setaByteEmP(0x12345678, 0xFF, 2) -> 0x12FF5678
- *          setaByteEmP(0x12345678, 0xFF, 3) -> 0xFF345678
- *
+/**
+ * x >> (p << 3) removera os p bits, | y trocara o valor no byte menos significativo por y
+ * e << (p << 3)) adicionara os bits removidos anteriormente.
+ * (x << (24 - p << 3) >> (24 - p << 3 )) pegara os bytes menos significafos que foram pulados e
+ * or adicionara esse valor ao final do numero ja substituido
  */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
     return ((((x >> (p << 3)) | y ) << (p << 3)) | (x << (24 - p << 3) >> (24 - p << 3 )));
 }
 
-/*
- * Minimo
- *      Permitido:
- *          Operações: << >> | ^ < > ~ ! & -
- *
- *      Número máximo de operações: 15
- *      Monitor: 5
- *
- *      Retorna o menor numero entre x e y
- *
- *      Exemplo:
- *          minimo(10, 15) -> 10
- *          minimo(-2, -1) -> -2
- *          minimo(-1, 2) -> -1
- *
+/**
+ * A parte -(x < y) sera 0 se x >= y e sera -1 se x < y.
+ * Como x & -1 = x  e x & 0 = 0 para qualquer 0. Se x < y teremos y ^ x ^ y que 
+ * e igual a x porque y ^ y e zerado. E de qualquer outra maneira teriamos 
+ * y ^ 0 que vale y. Entao teremos x se x < y e y de qualquer outra maneira
  */
 int32_t minimo(int32_t x, int32_t y) {
     return (y ^ ((x ^ y) & -(x < y)));
 }
 
-/*
- * Negação lógica sem !
- *      Permitido:
- *          Operações: << >> | & + ~
- *
- *      Número máximo de operações: 15
- *      Monitor: 5
- *
- *      Retorna 1 se x == 0, retorna 0 caso contrário
- *
- *      Exemplo:
- *          negacaoLogica(0) -> 1
- *          negacaoLogica(37) -> 0
- *
+
+/**
+ * o right shift maximo que podemos dar e 31 bits para nao haver um overflow
+ * ao fazer o shift em x e em seu inverso, temos garantido que um desses dois
+ * sera negativo e o shift feito o colocara em  0xFFFFFFFF. Entao fazemos o or
+ * para obter o numero que queremos negativo e fazemos o complemento a dois 
+ * para obter a negacao  
  */
-/*Negação lógica sem !
-*1° passo: (x && 1):      Essa operação consiste em transformar qualquer número x diferente de 0 em 1.
-*2° passo: ~(resultado):  Essa operação inverte todos os bits de um número. No caso x == 0, temos que o resultado dela
-*                         passa a ser -1 em complemento a 2.
-*                         Já no caso x != 0, temos que o resultado da mesma passa a ser -2 em complemento a 2.
-*3° passo: resultado + 2: Como vimos no 2° passo x == 0 implica resultado == -1, portanto, soma-se 2.
-*                         Logo, o resultado == 1. Como esperado.
-*                         No caso x != 0 implica resultado == -2, portanto, soma-se 2. Assim o resultado == 0 para
-*                         qualquer x != 0.
-*
-*/
 int32_t negacaoLogica(int32_t x) {
-  return (~(x && 1 )+2);
+  return (((x >> 31) | ((~x + 1) >> 31)) + 1);
 }
 
 void teste(int32_t saida, int32_t esperado) {
