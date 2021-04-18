@@ -185,8 +185,19 @@ int32_t minimo(int32_t x, int32_t y) {
  *          negacaoLogica(37) -> 0
  *
  */
+/*Negação lógica sem !
+*1° passo: (x && 1):      Essa operação consiste em transformar qualquer número x diferente de 0 em 1.
+*2° passo: ~(resultado):  Essa operação inverte todos os bits de um número. No caso x == 0, temos que o resultado dela
+*                         passa a ser -1 em complemento a 2.
+*                         Já no caso x != 0, temos que o resultado da mesma passa a ser -2 em complemento a 2.
+*3° passo: resultado + 2: Como vimos no 2° passo x == 0 implica resultado == -1, portanto, soma-se 2.
+*                         Logo, o resultado == 1. Como esperado.
+*                         No caso x != 0 implica resultado == -2, portanto, soma-se 2. Assim o resultado == 0 para
+*                         qualquer x != 0.
+*
+*/
 int32_t negacaoLogica(int32_t x) {
-  return ((( (x >> 31) | ((~x + 1) >> 31)) + 1));
+  return (~(x && 1 )+2);
 }
 
 void teste(int32_t saida, int32_t esperado) {
