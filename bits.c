@@ -138,7 +138,7 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  * or adicionara esse valor ao final do numero ja substituido
  */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
-    return ((((x >> (p << 3)) | y ) << (p << 3)) | (x << (24 - p << 3) >> (24 - p << 3 )));
+    return (y<<(p<<3)) | (x & (~(0xff << (p << 3))));
 }
 
 /**
