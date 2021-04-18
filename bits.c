@@ -22,6 +22,8 @@
  * Assinatura:
  *      Aluno: Miguel Lima Tavares
  *      DRE: 119161571
+ *      Aluno: Marcus Vinícius Torres de Oliveira
+ *      DRE: 118142223
  *      versão do GCC utilizada: 8.2.0
  *
  */
@@ -65,21 +67,6 @@ int32_t negativo(int32_t x) {
     return ((~x) + 1);
 }
 
-/* Implementação do & usando bitwise
- *      Permitido:
- *          Operações: ~ ^ | ! << >>
- *
- *      Número máximo de operações: 7
- *      Monitor: 4
- *
- *      Retorna x & y
- *
- *      Exemplo:
- *          bitwiseAnd(1, 2) -> 0
- *              01 & 10 -> 00
- *          bitwiseAnd(3, 11) -> 3
- *              11 & 1011 -> 0011
- */
 /*Implementação do & usando bitwise
 *1° passo: ~x e ~y :     Inverte todos os bits de x e y.
 *2° passo: (~x | ~y):    Faz um OU entre ~x e ~y.
