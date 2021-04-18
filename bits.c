@@ -167,7 +167,7 @@ int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
  *
  */
 int32_t minimo(int32_t x, int32_t y) {
-    return -1;
+    return (y ^ ((x ^ y) & -(x < y)));
 }
 
 /*
