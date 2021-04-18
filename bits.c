@@ -147,7 +147,7 @@ int32_t byteEmP(int32_t x, uint8_t p) {
  *
  */
 int32_t setaByteEmP(int32_t x, int32_t y, uint8_t p) {
-    return -1;
+    return ((((x >> (p << 3)) | y ) << (p << 3)) | (x << (24 - p << 3) >> (24 - p << 3 )));
 }
 
 /*
